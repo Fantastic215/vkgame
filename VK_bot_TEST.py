@@ -25,7 +25,7 @@ while True:
                 keyboard.add_button("/rasp", color=VkKeyboardColor.NEGATIVE, payload=None)
                 vk.messages.send(  # Отправляем собщение
                     peer_id=peer_id,
-                    keyboard=keyboard.get_keyboard(), message='  ', random_id=get_random_id())
+                    keyboard=keyboard.get_keyboard(), message='⌨', random_id=get_random_id())
 
             except Exception as ecc:
                 vk.messages.send(  # Отправляем собщение
