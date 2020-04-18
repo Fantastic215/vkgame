@@ -54,11 +54,10 @@ while True:
                     send('бота написал\n'
                          'https://vk.com/fantasticfeed\n'
                          '____________________________\n'
-                         '/game(в разработке)\n'
+                         '/game(в разработке)\n/report\n'
                          'разрабатываются новые возможности.', peer_id)
 
                 elif s == '/game':
-                    send('разработка...', peer_id)
                     try:
                         attachments = []
                         upload = VkUpload(vk_session)
@@ -69,7 +68,7 @@ while True:
                             'photo{}_{}'.format(photo['owner_id'], photo['id'])
                         )
                         vk.messages.send(
-                            peer_id=peer_id,
+                            peer_id=peer_id,message='разработка...',
                             attachment=','.join(attachments),
                             random_id=get_random_id()
                         )
@@ -80,5 +79,22 @@ while True:
                 elif s[0] == '/':
                     send('нет такой команды\n'
                          'попробуйте написать "/info"', peer_id)
+                    
+                elif s == '/report':
+                    if peer_id < 2000000000:
+                        send('опишите вашу проблему',peer_id)
+                        for event in longpoll.listen():
+                            if event.type == VkBotEventType.MESSAGE_NEW and event.object['text']:
+                                 vk.messages.send(  # Отправляем собщение
+                                                    peer_id=165974848,message='сообщение об ошибке \nот https://vk.com/id'
+                                     +str(event.object['peer_id'])+'\n"'+str(event.object['text'])+'"',
+                                                     random_id=get_random_id())
+                                 vk.messages.send(  # Отправляем собщение
+                                                    peer_id=event.object['peer_id'],message=
+                                     'спасибо за обращение, скоро с вами может связаться наш администратор⚙',
+                                                     random_id=get_random_id())
+                    else:
+                        send('напишите в лс бота',peer_id)
+                
     except Exception as ec:
         print(ec)
