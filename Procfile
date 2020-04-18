@@ -1,0 +1,1 @@
+worker: python VK_bot_TEST.py
