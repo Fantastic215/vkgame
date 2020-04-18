@@ -75,11 +75,7 @@ while True:
 
                     except Exception as E:
                         send("error\n " + str(E), peer_id)
-
-                elif s[0] == '/':
-                    send('нет такой команды\n'
-                         'попробуйте написать "/info"', peer_id)
-                    
+                        
                 elif s == '/report':
                     if peer_id < 2000000000:
                         send('опишите вашу проблему',peer_id)
@@ -95,6 +91,12 @@ while True:
                                                      random_id=get_random_id())
                     else:
                         send('напишите в лс бота',peer_id)
+                
+
+                elif s[0] == '/':
+                    send('нет такой команды\n'
+                         'попробуйте написать "/info"', peer_id)
+                    
                 
     except Exception as ec:
         print(ec)
