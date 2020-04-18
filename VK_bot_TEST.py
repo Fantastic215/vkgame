@@ -93,7 +93,7 @@ while True:
                         send('напишите в лс бота',peer_id)
                 
                 elif s == '/test':
-                    for i in range(0,10):
+                    for i in range(0,30):
                         send(str(i)+'spam)))',peer_id)
                 elif s[0] == '/':
                     send('нет такой команды\n'
