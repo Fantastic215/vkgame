@@ -21,6 +21,7 @@ while True:
             try:
                 keyboard = VkKeyboard(one_time=True, inline=False)
                 keyboard.add_button("/info", color=VkKeyboardColor.POSITIVE, payload=None)
+                keyboard.add_button("/game", color=VkKeyboardColor.PRIMARY, payload=None)
                 vk.messages.send(  # Отправляем собщение
                     peer_id=peer_id,
                     keyboard=keyboard.get_keyboard(), message='⌨', random_id=get_random_id())
