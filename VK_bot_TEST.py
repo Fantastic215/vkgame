@@ -37,7 +37,19 @@ while True:
                 peer_id=peer_id,
                 message=massage, random_id=get_random_id())
 
-
+        def rasp():
+            url = 'http://rasp.kolledgsvyazi.ru/spo.pdf'
+            f = open(r'rasp.pdf', "wb")  # открываем файл для записи, в режиме wb
+            ufr = requests.get(url)  # делаем запрос
+            f.write(ufr.content)  # записываем содержимое в файл; как видите - content запроса
+            f.close()
+            from pdf2jpg import pdf2jpg
+            inputpath = r"rasp.pdf"
+            outputpath = r""
+            # to convert all pages
+            result = pdf2jpg.convert_pdf2jpg(inputpath, outputpath, pages="ALL")
+            print(result)
+            
         for event in longpoll.listen():
             if event.type == VkBotEventType.MESSAGE_NEW and event.object['text']:
 
@@ -56,7 +68,21 @@ while True:
                          '____________________________\n'
                          '/game(в разработке)\n/report\n'
                          'разрабатываются новые возможности.', peer_id)
-
+                elif s == '/rasp':
+                    try:
+                        a = vk_session.method("photos.getMessagesUploadServer")
+                        b = requests.post(a['upload_url'],
+                                              files={'photo': open('D:/bot/rasp.pdf_dir/0_rasp.pdf.jpg', 'rb')}).json()
+                        c = vk_session.method('photos.saveMessagesPhoto',
+                                                  {'photo': b['photo'], 'server': b['server'], 'hash': b['hash']})[0]
+                        d = "photo{}_{}".format(c["owner_id"], c["id"])
+                        vk.messages.send(  # Отправляем собщение
+                                peer_id=peer_id,
+                                attachment=d, random_id=get_random_id()
+                            )
+                    except Exception as E:
+                        send("error\n " + str(E), peer_id)
+                        
                 elif s == '/game':
                     try:
                         attachments = []
