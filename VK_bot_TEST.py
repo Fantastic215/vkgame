@@ -3,6 +3,7 @@ import vk_api
 from vk_api import VkUpload
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor
 import os
+from io import BytesIO
 from vk_api.utils import get_random_id
 
 while True:
@@ -72,7 +73,7 @@ while True:
                     try:
                         a = vk_session.method("photos.getMessagesUploadServer")
                         b = requests.post(a['upload_url'],
-                                              files={'photo': open('rasp.pdf_dir\0_rasp.pdf.jpg', 'rb')}).json()
+                                              files={'photo': open(BytesIO('rasp.pdf_dir\0_rasp.pdf.jpg'), 'rb')}).json()
                         c = vk_session.method('photos.saveMessagesPhoto',
                                                   {'photo': b['photo'], 'server': b['server'], 'hash': b['hash']})[0]
                         d = "photo{}_{}".format(c["owner_id"], c["id"])
